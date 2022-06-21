@@ -46,7 +46,7 @@ class MemoFollowResource(Resource):
 
 class MemoListFollowResource(Resource):
     @jwt_required()
-    def get(self) :
+    def post(self) :
 
         connection = get_connection()
 
@@ -55,19 +55,20 @@ class MemoListFollowResource(Resource):
         try :
             # 데이터 insert
             # 1. DB에 연결
+            data = request.get_json()
             
             # 2. 쿼리문 만들기
             query = '''select m.title, m.date, m.memo, m.created_at, m.updated_at
                         from memo m
                         join follow f
                         on m.user_id = f.follower_id
-                        where follower_id = %s;'''                 
-            record = (user_id, )
+                        where followee_id = %s and follower_id = %s;'''                 
+            record = (data['followee_id'], user_id )
 
             # select 문은 dictionary = True를 해준다.
             cursor = connection.cursor(dictionary = True)  # 데이터를 셀렉할때 키벨류로 가져온다.
 
-            cursor.execute(query, record)
+            cursor.execute(query,record )
 
             # select문은 아래 함수를 이용해서 데이터를 가져온다.
             result_list = cursor.fetchall()
