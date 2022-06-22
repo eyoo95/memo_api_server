@@ -4,7 +4,7 @@ from config import Config
 from flask_restful import Api
 from resources.memo import MemoListResource, MemoInfoResource
 from resources.user import UserRegisterResource, UserLoginResource, UserLogoutResource, jwt_blacklist
-from resources.follow import MemoFollowResource, MemoListFollowResource, MemoDeleteFollowResource
+from resources.follow import FollowResource, FollowListResource
 
 app = Flask(__name__)
 
@@ -30,9 +30,8 @@ api.add_resource(UserRegisterResource, '/users/register')
 api.add_resource(UserLoginResource, '/users/login')
 api.add_resource(UserLogoutResource, '/users/logout')
 api.add_resource(MemoInfoResource , '/memo/<int:memo_id>')
-api.add_resource(MemoFollowResource , '/friend/<int:follower_id>/follow')
-api.add_resource(MemoListFollowResource , '/friend')
-api.add_resource(MemoDeleteFollowResource , '/friend/<int:follower_id>/unfollow')
+api.add_resource(FollowResource , '/follow/<int:followee_id>')
+api.add_resource(FollowListResource , '/follow')
 
 if __name__ == '__main__' :
     app.run()
