@@ -2,10 +2,8 @@ from flask import Flask, jsonify
 from flask_jwt_extended import JWTManager
 from config import Config
 from flask_restful import Api
-from resources.memo import MemoListResource
-from resources.memo_info import MemoResource
+from resources.memo import MemoListResource, MemoInfoResource
 from resources.user import UserRegisterResource, UserLoginResource, UserLogoutResource, jwt_blacklist
-from resources.memo_publish import MemoPublishResource
 from resources.follow import MemoFollowResource, MemoListFollowResource, MemoDeleteFollowResource
 
 app = Flask(__name__)
@@ -27,12 +25,11 @@ api = Api(app)
 
 # 경로와 resource(API 코드)를 연결한다.
 
-api.add_resource(MemoListResource , '/memos')
+api.add_resource(MemoListResource , '/memo')
 api.add_resource(UserRegisterResource, '/users/register')
 api.add_resource(UserLoginResource, '/users/login')
 api.add_resource(UserLogoutResource, '/users/logout')
-api.add_resource(MemoPublishResource, '/memos/<int:memo_id>/publish')
-api.add_resource(MemoResource , '/memos/<int:memo_id>')
+api.add_resource(MemoInfoResource , '/memo/<int:memo_id>')
 api.add_resource(MemoFollowResource , '/friend/<int:follower_id>/follow')
 api.add_resource(MemoListFollowResource , '/friend')
 api.add_resource(MemoDeleteFollowResource , '/friend/<int:follower_id>/unfollow')
