@@ -31,7 +31,7 @@ api.add_resource(UserLoginResource, '/users/login')
 api.add_resource(UserLogoutResource, '/users/logout')
 api.add_resource(MemoInfoResource , '/memo/<int:memo_id>')
 api.add_resource(FollowResource , '/follow/<int:followee_id>')
-api.add_resource(FollowListResource , '/follow')
+api.add_resource(FollowListResource,'/follow')
 
 if __name__ == '__main__' :
     app.run()
